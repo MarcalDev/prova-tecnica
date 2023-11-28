@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:seventh_prova_tecnica/base/services/user_service.dart';
 
 class LoginController extends RxController {
   late final TextEditingController usernameTextController;
   late final TextEditingController passwordTextController;
+  late final UserService userService;
 
   controllerInitializer() {
     usernameTextController = TextEditingController();
     passwordTextController = TextEditingController();
+    userService = UserService();
   }
 
   @override
@@ -17,5 +20,13 @@ class LoginController extends RxController {
     controllerInitializer();
   }
 
-  login() async {}
+  login() async {
+    try {
+      var token = await userService.login(
+          usernameTextController.text, passwordTextController.text);
+      print(token);
+    } catch (e) {
+      print(e);
+    }
+  }
 }

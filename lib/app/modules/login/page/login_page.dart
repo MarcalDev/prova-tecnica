@@ -29,7 +29,7 @@ class _LoginPageState extends State<LoginPage> {
         ),
         ButtonWidget(
           buttonText: 'LOGIN',
-          onPressed: controller.login,
+          onPressed: () async => controller.login(),
         )
       ]),
     );
