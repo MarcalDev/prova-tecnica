@@ -4,14 +4,11 @@ import 'package:http/http.dart' as http;
 
 class UserService {
   Future<String> login(String username, String password) async {
-    // String urlBase =
-    //     'https://mobiletest.seventh.com.br/api-docs/#/Authorization/post_login';
-    var url = Uri.https(
-        'mobiletest.seventh.com.br/api-docs/#/Authorization/post_login');
+    var url = Uri.parse('https://mobiletest.seventh.com.br/login');
     var response = await http
         .post(url, body: {'username': username, 'password': password});
+    if (response.statusCode != 200) throw Exception();
     var decodedBody = json.decode(response.body);
-
-    return decodedBody['Token'];
+    return decodedBody['token'];
   }
 }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:seventh_prova_tecnica/app/modules/video_player/page/video_player_page.dart';
 import 'package:seventh_prova_tecnica/base/services/user_service.dart';
 
 class LoginController extends RxController {
@@ -25,6 +26,7 @@ class LoginController extends RxController {
       var token = await userService.login(
           usernameTextController.text, passwordTextController.text);
       print(token);
+      Get.to(() => VideoPlayerPage(token: token));
     } catch (e) {
       print(e);
     }
