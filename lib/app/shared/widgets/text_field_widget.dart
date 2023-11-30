@@ -25,6 +25,7 @@ class TextFieldWidget extends StatefulWidget {
 }
 
 class _TextFieldWidgetState extends State<TextFieldWidget> {
+  bool _showPassword = true;
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -35,10 +36,23 @@ class _TextFieldWidgetState extends State<TextFieldWidget> {
           child: TextField(
             controller: widget.textEditingController,
             textAlignVertical: TextAlignVertical.center,
-            obscureText: widget.isPassword,
+            obscureText: widget.isPassword ? _showPassword : false,
             maxLines: 1,
             decoration: InputDecoration(
-              suffixIcon: widget.suffixIcon,
+              suffixIcon: widget.isPassword
+                  ? IconButton(
+                      onPressed: () {
+                        setState(() {
+                          _showPassword = !_showPassword;
+                        });
+                      },
+                      icon: Icon(
+                        (_showPassword)
+                            ? Icons.visibility_off
+                            : Icons.visibility,
+                        color: Colors.black,
+                      ))
+                  : const SizedBox(),
               contentPadding:
                   const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
               hintText: widget.hintText,

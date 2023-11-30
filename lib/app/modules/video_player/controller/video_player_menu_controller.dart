@@ -22,8 +22,7 @@ class VideoPlayerMenuController extends RxController {
   String get urlVideo => _urlVideo.value;
 
   getVideoUrl() async {
-    _videoService = VideoService();
-    var videoUrl = await _videoService.getVideo('bunny.mp4');
+    var videoUrl = await VideoService().getVideo('bunny.mp4');
     _urlVideo.value = videoUrl;
     _urlVideo.refresh();
   }

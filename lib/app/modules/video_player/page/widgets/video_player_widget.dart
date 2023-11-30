@@ -18,6 +18,7 @@ class VideoPlayerWidget extends StatefulWidget {
 class _VideoPlayerWidgetState extends State<VideoPlayerWidget> {
   late RxBool _isPlaying;
   late RxBool _isFullScreen;
+  late RxBool _isLoading;
   late RxDouble _screenSize;
   late VideoPlayerController _videoController;
 
@@ -27,16 +28,18 @@ class _VideoPlayerWidgetState extends State<VideoPlayerWidget> {
     super.initState();
     _isPlaying = false.obs;
     _isFullScreen = false.obs;
+    _isLoading = true.obs;
     _screenSize = 50.w.obs;
-    _videoController = VideoPlayerController.network(
-        'https://assets.mixkit.co/videos/preview/mixkit-a-girl-blowing-a-bubble-gum-at-an-amusement-park-1226-large.mp4');
+    _videoController = VideoPlayerController.network(widget.videoUrl);
     _videoController.addListener(() {
       setState(() {});
     });
     _videoController.initialize().then((value) {
-      setState(() {});
+      setState(() {
+        _isLoading.value = false;
+        _isLoading.refresh();
+      });
     });
-
     SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
   }
 
@@ -48,8 +51,10 @@ class _VideoPlayerWidgetState extends State<VideoPlayerWidget> {
   bool get isPlaying => _isPlaying.value;
   bool get isFullScreen => _isFullScreen.value;
   double get screenSize => _screenSize.value;
+  bool get isLoading => _isLoading.value;
 
   playPauseVideo() async {
+    if (isLoading) return;
     isPlaying ? await _videoController.pause() : await _videoController.play();
     _isPlaying.value = !isPlaying;
     _isPlaying.refresh();
@@ -71,37 +76,59 @@ class _VideoPlayerWidgetState extends State<VideoPlayerWidget> {
   @override
   Widget build(BuildContext context) {
     return Obx(
-      () => Expanded(
-        child: SizedBox(
-          height: isFullScreen ? null : 25.h,
-          child: Stack(
-            children: [
-              VideoPlayer(_videoController),
-              Align(
-                alignment: Alignment.bottomCenter,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    IconButton(
-                      onPressed: () async => await playPauseVideo(),
-                      icon: Icon(
-                        isPlaying
-                            ? Icons.pause_outlined
-                            : Icons.play_arrow_outlined,
-                        color: Colors.white,
+      () => PopScope(
+        canPop: !isFullScreen,
+        onPopInvoked: (value) {
+          if (isFullScreen) changeFullScreen();
+        },
+        child: Flexible(
+          fit: isFullScreen ? FlexFit.tight : FlexFit.loose,
+          child: SizedBox(
+            height: isFullScreen ? null : 25.h,
+            child: Stack(
+              children: [
+                VideoPlayer(_videoController),
+                Align(
+                  alignment: Alignment.bottomCenter,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      IconButton(
+                        style: ButtonStyle(
+                            backgroundColor: MaterialStateProperty.all(
+                                Colors.black.withOpacity(0.5))),
+                        onPressed: () async => await playPauseVideo(),
+                        icon: Icon(
+                          isPlaying
+                              ? Icons.pause_outlined
+                              : Icons.play_arrow_outlined,
+                          color: Colors.white,
+                        ),
                       ),
-                    ),
-                    IconButton(
-                      onPressed: () => changeFullScreen(),
-                      icon: Icon(
-                        isFullScreen ? Icons.fullscreen_exit : Icons.fullscreen,
-                        color: Colors.white,
+                      IconButton(
+                        style: ButtonStyle(
+                            backgroundColor: MaterialStateProperty.all(
+                                Colors.black.withOpacity(0.5))),
+                        onPressed: () => changeFullScreen(),
+                        icon: Icon(
+                          isFullScreen
+                              ? Icons.fullscreen_exit
+                              : Icons.fullscreen,
+                          color: Colors.white,
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
-              )
-            ],
+                if (isLoading)
+                  Align(
+                    alignment: Alignment.center,
+                    child: CircularProgressIndicator(
+                      color: Colors.blue,
+                    ),
+                  )
+              ],
+            ),
           ),
         ),
       ),

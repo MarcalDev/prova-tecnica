@@ -29,7 +29,8 @@ class LoginController extends RxController {
       var token = await userService.login(
           usernameTextController.text, passwordTextController.text);
       sharedPreferences.setString('token', token);
-
+      sharedPreferences.setString('username', usernameTextController.text);
+      sharedPreferences.setString('password', passwordTextController.text);
       Get.to(() => VideoPlayerMenuPage());
     } catch (e) {
       print(e);

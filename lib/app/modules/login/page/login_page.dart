@@ -34,6 +34,7 @@ class _LoginPageState extends State<LoginPage> {
         TextFieldWidget(
           textEditingController: controller.passwordTextController,
           hintText: 'Password',
+          isPassword: true,
         ),
         ButtonWidget(
           buttonText: 'LOGIN',
