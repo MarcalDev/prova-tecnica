@@ -1,32 +1,36 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:seventh_prova_tecnica/app/modules/video_player/page/video_player_page.dart';
+import 'package:seventh_prova_tecnica/app/modules/video_player/page/video_player_menu_page.dart';
 import 'package:seventh_prova_tecnica/base/services/user_service.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginController extends RxController {
   late final TextEditingController usernameTextController;
   late final TextEditingController passwordTextController;
   late final UserService userService;
+  late final SharedPreferences sharedPreferences;
 
-  controllerInitializer() {
+  controllerInitializer() async {
     usernameTextController = TextEditingController();
     passwordTextController = TextEditingController();
     userService = UserService();
+    sharedPreferences = await SharedPreferences.getInstance();
   }
 
   @override
-  void onInit() {
+  void onInit() async {
     // TODO: implement onInit
     super.onInit();
-    controllerInitializer();
+    await controllerInitializer();
   }
 
   login() async {
     try {
       var token = await userService.login(
           usernameTextController.text, passwordTextController.text);
-      print(token);
-      Get.to(() => VideoPlayerPage(token: token));
+      sharedPreferences.setString('token', token);
+
+      Get.to(() => VideoPlayerMenuPage());
     } catch (e) {
       print(e);
     }
