@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:responsive_sizer/responsive_sizer.dart';
 import 'package:seventh_prova_tecnica/app/modules/login/page/login_page.dart';
 
 void main() {
@@ -11,8 +12,10 @@ class MainApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const GetMaterialApp(
-      home: LoginPage(),
-    );
+    return ResponsiveSizer(builder: (context, orientation, screenType) {
+      return const GetMaterialApp(
+        home: LoginPage(),
+      );
+    });
   }
 }

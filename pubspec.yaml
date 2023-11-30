@@ -14,6 +14,7 @@ dependencies:
   video_player: ^2.6.0
   chewie: ^1.7.4
   shared_preferences: ^2.2.2
+  responsive_sizer: ^3.2.0
 
 dev_dependencies:
   flutter_test:
