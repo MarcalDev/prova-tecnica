@@ -25,7 +25,7 @@ class _VideoPlayerDetailPageState extends State<VideoPlayerDetailPage> {
   @override
   void initState() {
     super.initState();
-    _isPlaying = false.obs;
+    _isPlaying = true.obs;
     _isFullScreen = false.obs;
     _isLoading = true.obs;
     _videoController = VideoPlayerController.network(
@@ -39,6 +39,7 @@ class _VideoPlayerDetailPageState extends State<VideoPlayerDetailPage> {
       setState(() {
         _isLoading.value = false;
         _isLoading.refresh();
+        _videoController.play();
       });
     });
     SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
@@ -114,7 +115,11 @@ class _VideoPlayerDetailPageState extends State<VideoPlayerDetailPage> {
                   () => PopScope(
                     canPop: !isFullScreen,
                     onPopInvoked: (value) {
-                      if (isFullScreen) changeFullScreen();
+                      if (isFullScreen) {
+                        changeFullScreen();
+                      } else {
+                        _videoController.pause();
+                      }
                     },
                     child: Flexible(
                       fit: isFullScreen ? FlexFit.tight : FlexFit.loose,
