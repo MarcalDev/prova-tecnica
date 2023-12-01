@@ -7,7 +7,7 @@ import 'package:seventh_prova_tecnica/app/util/app_colors.dart';
 import 'package:seventh_prova_tecnica/app/util/text_fonts.dart';
 
 class ErrorPopup {
-  static void openPopup(BuildContext context, String errorText) {
+  static void openPopup(BuildContext context, String? errorText) {
     showModalBottomSheet(
         context: context,
         builder: (context) {
@@ -19,8 +19,8 @@ class ErrorPopup {
 }
 
 class ErrorPopupWidget extends StatefulWidget {
-  const ErrorPopupWidget({super.key, required this.popupText});
-  final String popupText;
+  const ErrorPopupWidget({super.key, this.popupText});
+  final String? popupText;
 
   @override
   State<ErrorPopupWidget> createState() => _ErrorPopupWidgetState();

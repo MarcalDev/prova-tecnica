@@ -62,7 +62,7 @@ class _TextFieldWidgetState extends State<TextFieldWidget> {
               contentPadding:
                   const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
               hintText: widget.hintText,
-              hintStyle: TextStyle(fontWeight: FontWeight.normal),
+              hintStyle: const TextStyle(fontWeight: FontWeight.normal),
               fillColor: AppColors.textFieldBackground,
               labelStyle: TextStyle(
                   fontSize: TextFonts.textFieldFont,

@@ -23,7 +23,7 @@ class _LoginPageState extends State<LoginPage> {
   @override
   void initState() {
     SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
-    // TODO: implement initState
+
     super.initState();
   }
 
@@ -33,7 +33,7 @@ class _LoginPageState extends State<LoginPage> {
       child: GestureDetector(
         onTap: () => FocusScope.of(context).unfocus(),
         child: Container(
-          color: AppColors.corBackground,
+          color: AppColors.backgroundColor,
           child: Padding(
             padding: EdgeInsets.symmetric(horizontal: 8.w),
             child: Column(
@@ -55,8 +55,8 @@ class _LoginPageState extends State<LoginPage> {
                   alignment: Alignment.centerLeft,
                   child: TextWidget(
                     text: 'Faça o login para acessar o vídeo',
-                    fontSize: TextFonts.fonteSubTituloLogin,
-                    textColor: AppColors.corCinzaMedio,
+                    fontSize: TextFonts.loginSubtitleFont,
+                    textColor: AppColors.darkGrayColor,
                   ),
                 ),
                 SizedBox(
@@ -73,7 +73,8 @@ class _LoginPageState extends State<LoginPage> {
                           textEditingController:
                               controller.usernameTextController,
                           hintText: 'Digite o usuário',
-                          prefixIcon: Icon(Icons.person, color: Colors.blue),
+                          prefixIcon:
+                              const Icon(Icons.person, color: Colors.blue),
                         ),
                         SizedBox(
                           height: 3.h,
@@ -84,7 +85,7 @@ class _LoginPageState extends State<LoginPage> {
                               controller.passwordTextController,
                           hintText: 'Digite a senha',
                           isPassword: true,
-                          prefixIcon: Icon(
+                          prefixIcon: const Icon(
                             Icons.lock,
                             color: Colors.blue,
                           ),

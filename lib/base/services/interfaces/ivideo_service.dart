@@ -1,3 +1,3 @@
 abstract class IVideoService {
-  Future<String> getVideo(String fileName);
+  Future<String?> getVideo(String fileName);
 }
