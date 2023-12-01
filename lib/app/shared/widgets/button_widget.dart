@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:responsive_sizer/responsive_sizer.dart';
 import 'package:seventh_prova_tecnica/app/shared/widgets/text_widget.dart';
+import 'package:seventh_prova_tecnica/app/util/text_fonts.dart';
 
 class ButtonWidget extends StatefulWidget {
   final String? buttonText;
@@ -9,6 +11,7 @@ class ButtonWidget extends StatefulWidget {
   final double? height;
   final double? width;
   final Widget? child;
+  final bool isLoading;
   const ButtonWidget(
       {super.key,
       this.buttonText,
@@ -17,7 +20,8 @@ class ButtonWidget extends StatefulWidget {
       this.textColor,
       this.width,
       this.height,
-      this.child});
+      this.child,
+      this.isLoading = false});
 
   @override
   State<ButtonWidget> createState() => _ButtonWidgetState();
@@ -38,8 +42,20 @@ class _ButtonWidgetState extends State<ButtonWidget> {
                       borderRadius: BorderRadius.circular(30)))),
           onPressed: widget.onPressed,
           child: widget.child ??
-              TextWidget(
-                  text: widget.buttonText ?? '', textColor: widget.textColor)),
+              (widget.isLoading
+                  ? SizedBox(
+                      height: 3.h,
+                      width: 3.h,
+                      child: const CircularProgressIndicator(
+                        color: Colors.white,
+                      ))
+                  : Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 2.w),
+                      child: TextWidget(
+                          fontSize: TextFonts.buttonFont,
+                          text: widget.buttonText ?? '',
+                          textColor: widget.textColor),
+                    ))),
     );
   }
 }
