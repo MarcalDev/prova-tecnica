@@ -23,7 +23,6 @@ class _LoginPageState extends State<LoginPage> {
   @override
   void initState() {
     SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
-
     super.initState();
   }
 

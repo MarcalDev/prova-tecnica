@@ -4,19 +4,16 @@ import 'package:get/get.dart';
 import 'package:seventh_prova_tecnica/app/modules/video_player/page/video_player_detail_page.dart';
 import 'package:seventh_prova_tecnica/app/shared/widgets/error_popup_widget.dart';
 import 'package:seventh_prova_tecnica/base/services/video_service.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class VideoPlayerMenuController extends RxController {
   late final RxString _urlVideo;
   late final RxBool _isLoading;
   late final RxBool _isExitPressed;
-  late final SharedPreferences sharedPreferences;
 
   controllerInitializer() async {
     _urlVideo = "".obs;
     _isLoading = false.obs;
     _isExitPressed = false.obs;
-    sharedPreferences = await SharedPreferences.getInstance();
   }
 
   @override
