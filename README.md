@@ -1,3 +1,3 @@
-# seventh_prova_tecnica
+# prova_tecnica
 
 A new Flutter project.
